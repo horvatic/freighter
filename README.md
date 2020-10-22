@@ -1,4 +1,4 @@
-# freighter
+# Freighter
 
 ![Build](https://github.com/horvatic/freighter/workflows/Build/badge.svg)
 
