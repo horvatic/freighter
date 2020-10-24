@@ -1,10 +1,9 @@
 package main
 
 import (
-	"fmt"
+	"github.com/horvatic/freighter/pkg/gateway"
 )
 
 func main() {
-
-	fmt.Println("Hello!")
+	gateway.Start()
 }
