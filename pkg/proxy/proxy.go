@@ -6,22 +6,22 @@ import (
 )
 
 type Proxy interface {
-  GetRequest(uri string) ([] byte, error)
+  GetRequest(uri string) ([] byte, error, int)
 }
 
 type RequestProxy struct {
 }
 
-func (p *RequestProxy) GetRequest(uri string) ([] byte, error) {
+func (p *RequestProxy) GetRequest(uri string) ([] byte, error, int) {
   resp, err := http.Get(uri)
   if err != nil {
-    return nil, err
+    return nil, err, http.StatusInternalServerError
   }
   defer resp.Body.Close()
   body, err := ioutil.ReadAll(resp.Body)
   if err != nil {
-    return nil, err
+    return nil, err, http.StatusInternalServerError
   }
 
-  return body, nil
+  return body, nil, resp.StatusCode
 }
