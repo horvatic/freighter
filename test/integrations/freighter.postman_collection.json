@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "80973560-91f2-4322-9a46-961879bf3ff4",
+		"name": "freighter",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "basic get 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8d203711-709c-42cd-be3f-943a0a82e9af",
+						"exec": [
+							"pm.test(\"Body is hello\", () => {",
+							"  const response = pm.response.text();",
+							"  pm.expect(response).to.eql(\"hello\\n\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8080/hello",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "basic get 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb2e27c7-6691-4d31-be77-520baad1bea9",
+						"exec": [
+							"pm.test(\"Body is 404 page not found\", () => {",
+							"  const response = pm.response.text();",
+							"  pm.expect(response).to.eql(\"404 page not found\\n\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8080/feweewf",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"feweewf"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
