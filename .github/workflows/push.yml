@@ -1,7 +1,7 @@
-name: Build
+name: Push
 
 on:
-  pull_request:
+  push:
     branches: [ main ]
 
 jobs:
@@ -47,3 +47,6 @@ jobs:
 
     - name: Output summary to console
       run: echo ${{ steps.run-api-tests.outputs.summary }}
+
+    - name: Start Dockerhub Build
+      run: curl -X POST ${{ secrets.DOCKERHUB_ENDPOINT }}
