@@ -1,6 +1,16 @@
 # Freighter
 
-![Build](https://github.com/horvatic/freighter/workflows/Build/badge.svg)
+![Push](https://github.com/horvatic/freighter/workflows/Push/badge.svg)
+
+[![made-with-Go](https://img.shields.io/badge/Made%20with-Go-1f425f.svg)](http://golang.org)
+
+[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/horvatic/freighter.svg)](https://github.com/gomods/athens)
+
+[![GoReportCard example](https://goreportcard.com/badge/github.com/horvatic/freighter)](https://goreportcard.com/report/github.com/nanomsg/mangos)
+
+![Dockerhub](https://img.shields.io/docker/cloud/build/horvatic/freighter.svg)
+
+[![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
 
 [Storyboard](https://trello.com/b/JUoGW49f/freighter)
 
