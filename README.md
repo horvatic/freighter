@@ -34,8 +34,8 @@ Used to build and run a test environment where freighter and freighterTest are b
 ### make run
 Used to build and run freighter
 
-### docker-build
+### make docker-build
 Used to build a docker image
 
-### docker-run
+### make docker-run
 Used to run the docker image
