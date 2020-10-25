@@ -58,8 +58,8 @@
 							"  pm.expect(response).to.eql(\"404 page not found\\n\");",
 							"});",
 							"",
-							"pm.test(\"Status code is 200\", () => {",
-							"  pm.response.to.have.status(200);",
+							"pm.test(\"Status code is 404\", () => {",
+							"  pm.response.to.have.status(404);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -80,6 +80,46 @@
 					"port": "8080",
 					"path": [
 						"feweewf"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "basic get 500",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f33d1bdb-dcf6-4ede-bc35-d32bcf9fb823",
+						"exec": [
+							"pm.test(\"Body is 500 page not found\", () => {",
+							"  const response = pm.response.text();",
+							"  pm.expect(response).to.eql(\"Internal Server Error\\n\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 500\", () => {",
+							"  pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8080/error",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"error"
 					]
 				}
 			},
