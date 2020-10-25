@@ -19,17 +19,23 @@ Used to mod tidy
 ### make build
 Used to build the main application. Compiled result are located at bin/freighter
 
-### make buildTest
+### make build-test
 Used to build the test service. Compiled result are located at bin/freighterTest
 
 ### make clean
 Used to clean all build and running artifacts
 
-### make unitTest
+### make unit-test
 Used to run unit test
 
-### make runTestEnv
+### make run-test-env
 Used to build and run a test environment where freighter and freighterTest are both Running
 
 ### make run
 Used to build and run freighter
+
+### make docker-build
+Used to build a docker image
+
+### make docker-run
+Used to run the docker image
