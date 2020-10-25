@@ -1,10 +1,6 @@
 name: Build
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -29,19 +25,16 @@ jobs:
         fi
 
     - name: Build
-      run: go build -v cmd/main.go
+      run: go build -v cmd/freighter/main.go
 
     - name: Test
       run: go test -v ./...
 
     - name: Run Main
-      run: go run cmd/main.go &
+      run: go run cmd/freighter/main.go &
 
     - name: Run Test Server
-      run: go run test/service/cmd/main.go &
-
-    - name: Checkout
-      uses: actions/checkout@v1
+      run: go run test/service/cmd/freighter/main.go &
 
     - name: Run API Tests
       id: run-newman
