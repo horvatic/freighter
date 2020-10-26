@@ -30,7 +30,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "127.0.0.1:8080/hello",
+					"raw": "127.0.0.1:8080/test/hello",
 					"host": [
 						"127",
 						"0",
@@ -39,6 +39,7 @@
 					],
 					"port": "8080",
 					"path": [
+						"test",
 						"hello"
 					]
 				}
@@ -70,7 +71,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "127.0.0.1:8080/feweewf",
+					"raw": "127.0.0.1:8080/test/feweewf",
 					"host": [
 						"127",
 						"0",
@@ -79,6 +80,7 @@
 					],
 					"port": "8080",
 					"path": [
+						"test",
 						"feweewf"
 					]
 				}
@@ -110,7 +112,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "127.0.0.1:8080/error",
+					"raw": "127.0.0.1:8080/test/error",
 					"host": [
 						"127",
 						"0",
@@ -119,7 +121,49 @@
 					],
 					"port": "8080",
 					"path": [
+						"test",
 						"error"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "basic get no host 500",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c862eafc-0b70-4ffe-8ae8-8181c2700c57",
+						"exec": [
+							"pm.test(\"Body is 500 page not found\", () => {",
+							"  const response = pm.response.text();",
+							"  pm.expect(response).to.eql(\"No service found\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 500\", () => {",
+							"  pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8080/nohost/hello",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"nohost",
+						"hello"
 					]
 				}
 			},
