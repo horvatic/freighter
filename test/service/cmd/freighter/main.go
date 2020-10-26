@@ -1,7 +1,10 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -25,6 +28,15 @@ func headers(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+
+	values := map[string]string{"serviceName": "test", "host": "127.0.0.1", "port": "8000"}
+
+	jsonValue, _ := json.Marshal(values)
+
+	resp, _ := http.Post("http://127.0.0.1:8080/config", "application/json", bytes.NewBuffer(jsonValue))
+	body, _ := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(body))
+	resp.Body.Close()
 
 	http.HandleFunc("/hello", hello)
 	http.HandleFunc("/headers", headers)

@@ -1,24 +1,18 @@
 package gateway
 
 import (
+	"errors"
+	"github.com/horvatic/freighter/test/mock"
 	"net/http"
 	"testing"
 )
 
-type FakeProxy struct {
-	Body       []byte
-	Error      error
-	StatusCode int
-}
-
-func (p *FakeProxy) GetRequest(uri string) ([]byte, error, int) {
-	return p.Body, p.Error, p.StatusCode
-}
-
 func TestRoute(t *testing.T) {
 	testBody := "test123"
 
-	result, StatusCode := route(&Request{UriPath: "test"}, &FakeProxy{Body: []byte(testBody), Error: nil, StatusCode: http.StatusOK})
+	result, StatusCode := route(&Request{UriPath: "test"},
+		&mock.MockProxy{Body: []byte(testBody), Error: nil, StatusCode: http.StatusOK},
+		&mock.MockDataStore{})
 
 	if result != testBody {
 		t.Errorf("got %q want %q", result, testBody)
@@ -32,7 +26,9 @@ func TestRoute(t *testing.T) {
 func TestRoute404(t *testing.T) {
 	testBody := "test123"
 
-	result, StatusCode := route(&Request{UriPath: "test"}, &FakeProxy{Body: []byte(testBody), Error: nil, StatusCode: http.StatusNotFound})
+	result, StatusCode := route(&Request{UriPath: "test"},
+		&mock.MockProxy{Body: []byte(testBody), Error: nil, StatusCode: http.StatusNotFound},
+		&mock.MockDataStore{})
 
 	if result != testBody {
 		t.Errorf("got %q want %q", result, testBody)
@@ -46,10 +42,42 @@ func TestRoute404(t *testing.T) {
 func TestRoute500(t *testing.T) {
 	testBody := "test123"
 
-	result, StatusCode := route(&Request{UriPath: "test"}, &FakeProxy{Body: []byte(testBody), Error: nil, StatusCode: http.StatusInternalServerError})
+	result, StatusCode := route(&Request{UriPath: "test"},
+		&mock.MockProxy{Body: []byte(testBody), Error: nil, StatusCode: http.StatusInternalServerError},
+		&mock.MockDataStore{})
 
 	if result != testBody {
 		t.Errorf("got %q want %q", result, testBody)
+	}
+
+	if StatusCode != http.StatusInternalServerError {
+		t.Errorf("got %q want %q", http.StatusInternalServerError, StatusCode)
+	}
+}
+
+func TestRoute500CallingProxy(t *testing.T) {
+	testBody := "Could not complete request"
+
+	result, StatusCode := route(&Request{UriPath: "test"},
+		&mock.MockProxy{Body: nil, Error: errors.New("error"), StatusCode: http.StatusInternalServerError},
+		&mock.MockDataStore{})
+
+	if result != testBody {
+		t.Errorf("got %q want %q", result, testBody)
+	}
+
+	if StatusCode != http.StatusInternalServerError {
+		t.Errorf("got %q want %q", http.StatusInternalServerError, StatusCode)
+	}
+}
+
+func TestRouteCantFindService(t *testing.T) {
+	result, StatusCode := route(&Request{UriPath: "test"},
+		&mock.MockProxy{Body: nil, Error: nil, StatusCode: http.StatusInternalServerError},
+		&mock.MockDataStore{Error: errors.New("error")})
+
+	if result != "error" {
+		t.Errorf("got %q want %q", result, "error")
 	}
 
 	if StatusCode != http.StatusInternalServerError {

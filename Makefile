@@ -26,16 +26,16 @@ unit-test: clean mod
 	go test ./...
 
 .PHONY: run-test-env
-run-test-env: clean mod build buildTest
+run-test-env: clean mod build build-test
 	nohup bin/freighter & >/dev/null &
-	nohup bin/freighterTest & >/dev/null &
+	bin/freighterTest & >/dev/null
 	@echo
 	@echo
 	@echo "****Process Running****"
 	@ps -a | grep "freighter"
 
 .PHONY: run
-run:    clean mod build
+run: clean mod build
 	nohup bin/freighter & >/dev/null &
 	@echo
 	@echo
