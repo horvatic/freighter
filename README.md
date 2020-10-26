@@ -4,7 +4,7 @@
 
 [![made-with-Go](https://img.shields.io/badge/Made%20with-Go-1f425f.svg)](http://golang.org)
 
-[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/horvatic/freighter.svg)](https://github.com/gomods/athens)
+[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/horvatic/freighter.svg)](https://github.com/horvatic/freighter)
 
 [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/Naereen/StrapDown.js/blob/master/LICENSE)
 
