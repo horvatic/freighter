@@ -35,6 +35,9 @@ jobs:
     - name: Run Main
       run: go run cmd/freighter/main.go &
 
+    - name: sleep
+      run: sleep 5
+
     - name: Run Test Server
       run: go run test/service/cmd/freighter/main.go &
 

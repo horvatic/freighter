@@ -28,6 +28,7 @@ unit-test: clean mod
 .PHONY: run-test-env
 run-test-env: clean mod build build-test
 	nohup bin/freighter & >/dev/null &
+	sleep 5
 	bin/freighterTest & >/dev/null
 	@echo
 	@echo

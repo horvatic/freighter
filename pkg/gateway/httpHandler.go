@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/horvatic/freighter/pkg/datastore"
 	"github.com/horvatic/freighter/pkg/proxy"
+	"io"
 	"net/http"
 )
 
@@ -23,8 +24,9 @@ func handleConfig(w http.ResponseWriter, req *http.Request) {
 
 func handleRequest(w http.ResponseWriter, req *http.Request) {
 	response, statusCode := route(&Request{UriPath: req.URL.Path}, &proxy.RequestProxy{}, store)
+	defer response.Close()
 	w.WriteHeader(statusCode)
-	fmt.Fprintf(w, response)
+	io.Copy(w, response)
 }
 
 func Start() {
