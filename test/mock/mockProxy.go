@@ -10,6 +10,9 @@ type MockProxy struct {
 	StatusCode int
 }
 
+var ProxyUriRequest string
+
 func (p *MockProxy) GetRequest(uri string) (io.ReadCloser, error, int) {
+	ProxyUriRequest = uri
 	return p.Body, p.Error, p.StatusCode
 }
