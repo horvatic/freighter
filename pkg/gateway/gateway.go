@@ -6,18 +6,14 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
-func route(req *Request, p proxy.Proxy, d datastore.DataStore) (io.ReadCloser, int) {
-	parts := strings.SplitAfter(strings.TrimLeft(req.UriPath, "/"), "/")
-	s, serr := d.GetService(strings.TrimRight(parts[0], "/"))
-	if serr != nil {
-		return ioutil.NopCloser(strings.NewReader(serr.Error())), http.StatusInternalServerError
-	}
+func getQuery(query url.Values) (string) {
 	q := ""
-	if req.Query != nil {
-		for key, elements := range req.Query {
+	if query != nil {
+		for key, elements := range query {
 			for _, element := range elements {
 				if q != "" {
 					q = q + "&"
@@ -29,7 +25,17 @@ func route(req *Request, p proxy.Proxy, d datastore.DataStore) (io.ReadCloser, i
 	if q != "" {
 		q = "?" + q
 	}
-	body, err, statusCode := p.GetRequest(s.Host + ":" + s.Port + "/" + strings.Join(parts[1:], "") + q)
+	return q
+}
+
+func route(req *Request, p proxy.Proxy, d datastore.DataStore) (io.ReadCloser, int) {
+	parts := strings.SplitAfter(strings.TrimLeft(req.UriPath, "/"), "/")
+	s, serr := d.GetService(strings.TrimRight(parts[0], "/"))
+	if serr != nil {
+		return ioutil.NopCloser(strings.NewReader(serr.Error())), http.StatusInternalServerError
+	}
+
+	body, err, statusCode := p.GetRequest(s.Host + ":" + s.Port + "/" + strings.Join(parts[1:], "") + getQuery(req.Query))
 	if err != nil {
 		if body != nil {
 			body.Close()
