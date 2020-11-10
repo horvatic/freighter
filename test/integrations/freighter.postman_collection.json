@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "80973560-91f2-4322-9a46-961879bf3ff4",
+		"_postman_id": "1344a386-6f8b-4875-8c36-7ad4b0a9f09d",
 		"name": "freighter",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8d203711-709c-42cd-be3f-943a0a82e9af",
+						"id": "c25c3df3-2d4d-4902-b1da-e98ee4af5e97",
 						"exec": [
 							"pm.test(\"Body is hello\", () => {",
 							"  const response = pm.response.text();",
@@ -47,12 +47,59 @@
 			"response": []
 		},
 		{
+			"name": "basic get 200 query",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f0943986-cef2-41b2-bc38-0aa8670a466e",
+						"exec": [
+							"pm.test(\"Body is hello\", () => {",
+							"  const response = pm.response.text();",
+							"  pm.expect(response).to.eql(\"hello=world\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8080/test/testquery?hello=world",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"testquery"
+					],
+					"query": [
+						{
+							"key": "hello",
+							"value": "world"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "basic get 404",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "bb2e27c7-6691-4d31-be77-520baad1bea9",
+						"id": "6470b6bc-147f-4237-bf12-bc8dbd651c29",
 						"exec": [
 							"pm.test(\"Body is 404 page not found\", () => {",
 							"  const response = pm.response.text();",
@@ -93,7 +140,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f33d1bdb-dcf6-4ede-bc35-d32bcf9fb823",
+						"id": "6b4a444f-d546-4476-bd83-57a906ce1e6e",
 						"exec": [
 							"pm.test(\"Body is 500 page not found\", () => {",
 							"  const response = pm.response.text();",
@@ -134,7 +181,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c862eafc-0b70-4ffe-8ae8-8181c2700c57",
+						"id": "f2248188-0886-4513-a40f-49225e046886",
 						"exec": [
 							"pm.test(\"Body is 500 page not found\", () => {",
 							"  const response = pm.response.text();",

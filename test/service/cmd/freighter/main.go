@@ -13,6 +13,21 @@ func errorResponse(w http.ResponseWriter, req *http.Request) {
 	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 }
 
+func testquery(w http.ResponseWriter, req *http.Request) {
+	q := ""
+	if req.URL.Query() != nil {
+		for key, elements := range req.URL.Query() {
+			for _, element := range elements {
+				if q != "" {
+					q = q + "&"
+				}
+				q = q + key + "=" + element
+			}
+		}
+	}
+	fmt.Fprintf(w, q)
+}
+
 func hello(w http.ResponseWriter, req *http.Request) {
 
 	fmt.Fprintf(w, "hello\n")
@@ -29,7 +44,7 @@ func headers(w http.ResponseWriter, req *http.Request) {
 
 func main() {
 
-	values := map[string]string{"serviceName": "test", "host": "127.0.0.1", "port": "8000"}
+	values := map[string]string{"serviceName": "test", "host": "http://127.0.0.1", "port": "8000"}
 
 	jsonValue, _ := json.Marshal(values)
 
@@ -39,6 +54,7 @@ func main() {
 	resp.Body.Close()
 
 	http.HandleFunc("/hello", hello)
+	http.HandleFunc("/testquery", testquery)
 	http.HandleFunc("/headers", headers)
 	http.HandleFunc("/error", errorResponse)
 
