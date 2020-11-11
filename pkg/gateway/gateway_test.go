@@ -15,8 +15,10 @@ func TestRoute(t *testing.T) {
 	testBody := ioutil.NopCloser(strings.NewReader("test123"))
 	defer testBody.Close()
 	query := make(map[string][]string)
+	headers := make(map[string][]string)
 	query["hello"] = []string{"world", "444"}
-	result, StatusCode := route(NewRequest("servicename/test", query),
+	headers["head"] = []string{"headerinfo"}
+	result, StatusCode := route(NewRequest("servicename/test", query, headers),
 		&mock.MockProxy{Body: testBody, Error: nil, StatusCode: http.StatusOK},
 		&mock.MockDataStore{Service: datastore.Service{ServiceName: "test", Host: "1.1.1.1", Port: "8080"}, Error: nil})
 	defer result.Close()
@@ -31,6 +33,10 @@ func TestRoute(t *testing.T) {
 
 	if StatusCode != http.StatusOK {
 		t.Errorf("got %q want %q", http.StatusOK, StatusCode)
+	}
+
+	if mock.ProxyHeaderRequest["head"][0] != "headerinfo" {
+		t.Errorf("got %q want %q", mock.ProxyHeaderRequest["head"][0], "headerinfo")
 	}
 }
 

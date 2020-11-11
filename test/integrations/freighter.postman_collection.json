@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "1344a386-6f8b-4875-8c36-7ad4b0a9f09d",
+		"_postman_id": "6d11102a-59b5-4a30-acda-8b00cadb5882",
 		"name": "freighter",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c25c3df3-2d4d-4902-b1da-e98ee4af5e97",
+						"id": "b5bd2eb0-b79d-45c3-ac21-6939716624e0",
 						"exec": [
 							"pm.test(\"Body is hello\", () => {",
 							"  const response = pm.response.text();",
@@ -47,12 +47,68 @@
 			"response": []
 		},
 		{
+			"name": "basic get 200 Header",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "68205c32-e044-4806-98c7-e1b8ac3040aa",
+						"exec": [
+							"pm.test(\"Body is hello\", () => {",
+							"  const response = pm.response.text();",
+							"  pm.expect(response).to.include(\"Hello: 123\\n\");",
+							"  pm.expect(response).to.include(\"Moretest: testing123\\n\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "hello",
+						"value": "123",
+						"type": "text"
+					},
+					{
+						"key": "moretest",
+						"value": "testing123",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8080/test/headers",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"headers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "basic get 200 query",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "f0943986-cef2-41b2-bc38-0aa8670a466e",
+						"id": "e8c3cc45-85c1-49a5-a221-d6ec49681c63",
 						"exec": [
 							"pm.test(\"Body is hello\", () => {",
 							"  const response = pm.response.text();",
@@ -99,7 +155,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6470b6bc-147f-4237-bf12-bc8dbd651c29",
+						"id": "421bf09d-bf14-4e53-973a-135609d72bbc",
 						"exec": [
 							"pm.test(\"Body is 404 page not found\", () => {",
 							"  const response = pm.response.text();",
@@ -140,7 +196,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "6b4a444f-d546-4476-bd83-57a906ce1e6e",
+						"id": "46d70b34-a2b6-4186-a66b-4a7f584edf5d",
 						"exec": [
 							"pm.test(\"Body is 500 page not found\", () => {",
 							"  const response = pm.response.text();",
@@ -181,7 +237,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f2248188-0886-4513-a40f-49225e046886",
+						"id": "b42e8532-dc97-40e1-ab88-7b8b5c1310e0",
 						"exec": [
 							"pm.test(\"Body is 500 page not found\", () => {",
 							"  const response = pm.response.text();",

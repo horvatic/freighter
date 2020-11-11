@@ -2,6 +2,7 @@ package mock
 
 import (
 	"io"
+	"net/http"
 )
 
 type MockProxy struct {
@@ -11,8 +12,10 @@ type MockProxy struct {
 }
 
 var ProxyUriRequest string
+var ProxyHeaderRequest http.Header
 
-func (p *MockProxy) GetRequest(uri string) (io.ReadCloser, error, int) {
+func (p *MockProxy) GetRequest(uri string, headers http.Header) (io.ReadCloser, error, int) {
 	ProxyUriRequest = uri
+	ProxyHeaderRequest = headers
 	return p.Body, p.Error, p.StatusCode
 }
