@@ -23,7 +23,7 @@ func handleConfig(w http.ResponseWriter, req *http.Request) {
 }
 
 func handleRequest(w http.ResponseWriter, req *http.Request) {
-	response, statusCode := route(&Request{UriPath: req.URL.Path, Query: req.URL.Query()}, &proxy.RequestProxy{}, store)
+	response, statusCode := route(NewRequest(req.URL.Path, req.URL.Query(), req.Header), &proxy.RequestProxy{}, store)
 	defer response.Close()
 	w.WriteHeader(statusCode)
 	io.Copy(w, response)
