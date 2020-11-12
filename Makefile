@@ -7,6 +7,7 @@ mod:
 	go mod tidy
 
 .PHONY: build
+.NOTPARALLEL:
 build: clean mod unit-test
 	go build -o bin/freighter cmd/freighter/main.go
 
@@ -21,11 +22,13 @@ clean:
 	rm -rf bin
 
 .PHONY: unit-test
+.NOTPARALLEL:
 unit-test: clean mod
 	go clean -testcache
 	go test ./...
 
 .PHONY: run-test-env
+.NOTPARALLEL:
 run-test-env: clean mod build build-test
 	nohup bin/freighter & >/dev/null &
 	sleep 5
@@ -36,6 +39,7 @@ run-test-env: clean mod build build-test
 	@ps -a | grep "freighter"
 
 .PHONY: run
+.NOTPARALLEL:
 run: clean mod build
 	nohup bin/freighter & >/dev/null &
 	@echo
@@ -44,6 +48,7 @@ run: clean mod build
 	@ps -a | grep "freighter"
 
 .PHONY: docker-build
+.NOTPARALLEL:
 docker-build: clean unit-test
 	docker build . -t freighter
 
