@@ -13,7 +13,7 @@ func errorResponse(w http.ResponseWriter, req *http.Request) {
 	http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
 }
 
-func testquery(w http.ResponseWriter, req *http.Request) {
+func testQuery(w http.ResponseWriter, req *http.Request) {
 	q := ""
 	if req.URL.Query() != nil {
 		for key, elements := range req.URL.Query() {
@@ -31,6 +31,13 @@ func testquery(w http.ResponseWriter, req *http.Request) {
 func hello(w http.ResponseWriter, req *http.Request) {
 
 	fmt.Fprintf(w, "hello\n")
+}
+
+func postBody(w http.ResponseWriter, req *http.Request) {
+
+	bodyBytes, _ := ioutil.ReadAll(req.Body)
+	bodyString := string(bodyBytes)
+	fmt.Fprintf(w, bodyString)
 }
 
 func headers(w http.ResponseWriter, req *http.Request) {
@@ -54,9 +61,10 @@ func main() {
 	resp.Body.Close()
 
 	http.HandleFunc("/hello", hello)
-	http.HandleFunc("/testquery", testquery)
+	http.HandleFunc("/testquery", testQuery)
 	http.HandleFunc("/headers", headers)
 	http.HandleFunc("/error", errorResponse)
+	http.HandleFunc("/postbody", postBody)
 
 	http.ListenAndServe(":8000", nil)
 }

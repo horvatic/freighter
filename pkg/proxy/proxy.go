@@ -6,14 +6,14 @@ import (
 )
 
 type Proxy interface {
-	GetRequest(uri string, headers http.Header) (io.ReadCloser, error, int)
+	DoRequest(method string, uri string, headers http.Header, body io.ReadCloser) (io.ReadCloser, error, int)
 }
 
 type RequestProxy struct {
 }
 
-func (p *RequestProxy) GetRequest(uri string, headers http.Header) (io.ReadCloser, error, int) {
-	req, err := http.NewRequest("GET", uri, nil)
+func (p *RequestProxy) DoRequest(method string, uri string, headers http.Header, body io.ReadCloser) (io.ReadCloser, error, int) {
+	req, err := http.NewRequest(method, uri, body)
 	setHeaders(headers, req)
 	client := &http.Client{}
 	resp, err := client.Do(req)
