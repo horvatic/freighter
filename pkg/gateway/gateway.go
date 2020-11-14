@@ -35,7 +35,7 @@ func route(req *Request, p proxy.Proxy, d datastore.DataStore) (io.ReadCloser, i
 		return ioutil.NopCloser(strings.NewReader(serr.Error())), http.StatusInternalServerError
 	}
 
-	body, err, statusCode := p.GetRequest(s.Host+":"+s.Port+"/"+strings.Join(parts[1:], "")+getQuery(req.Query), req.Headers)
+	body, err, statusCode := p.DoRequest(req.Method, s.Host+":"+s.Port+"/"+strings.Join(parts[1:], "")+getQuery(req.Query), req.Headers, req.Body)
 	if err != nil {
 		if body != nil {
 			body.Close()

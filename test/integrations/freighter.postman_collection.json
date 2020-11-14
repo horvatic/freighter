@@ -54,7 +54,7 @@
 					"script": {
 						"id": "68205c32-e044-4806-98c7-e1b8ac3040aa",
 						"exec": [
-							"pm.test(\"Body is hello\", () => {",
+							"pm.test(\"response is correct\", () => {",
 							"  const response = pm.response.text();",
 							"  pm.expect(response).to.include(\"Hello: 123\\n\");",
 							"  pm.expect(response).to.include(\"Moretest: testing123\\n\");",
@@ -110,7 +110,7 @@
 					"script": {
 						"id": "e8c3cc45-85c1-49a5-a221-d6ec49681c63",
 						"exec": [
-							"pm.test(\"Body is hello\", () => {",
+							"pm.test(\"response is hello=world\", () => {",
 							"  const response = pm.response.text();",
 							"  pm.expect(response).to.eql(\"hello=world\");",
 							"});",
@@ -157,7 +157,7 @@
 					"script": {
 						"id": "421bf09d-bf14-4e53-973a-135609d72bbc",
 						"exec": [
-							"pm.test(\"Body is 404 page not found\", () => {",
+							"pm.test(\"response is 404 page not found\", () => {",
 							"  const response = pm.response.text();",
 							"  pm.expect(response).to.eql(\"404 page not found\\n\");",
 							"});",
@@ -198,7 +198,7 @@
 					"script": {
 						"id": "46d70b34-a2b6-4186-a66b-4a7f584edf5d",
 						"exec": [
-							"pm.test(\"Body is 500 page not found\", () => {",
+							"pm.test(\"response is 500 page not found\", () => {",
 							"  const response = pm.response.text();",
 							"  pm.expect(response).to.eql(\"Internal Server Error\\n\");",
 							"});",
@@ -239,7 +239,7 @@
 					"script": {
 						"id": "b42e8532-dc97-40e1-ab88-7b8b5c1310e0",
 						"exec": [
-							"pm.test(\"Body is 500 page not found\", () => {",
+							"pm.test(\"response is 500 page not found\", () => {",
 							"  const response = pm.response.text();",
 							"  pm.expect(response).to.eql(\"No service found\");",
 							"});",
@@ -267,6 +267,51 @@
 					"path": [
 						"nohost",
 						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "basic POST",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8d5644f7-7c46-40cd-a067-4147b3a569e6",
+						"exec": [
+							"pm.test(\"response\", () => {",
+							"  const response = pm.response.text();",
+							"  pm.expect(response).to.eql(\"hello all from post\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "hello all from post"
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/test/postbody",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"postbody"
 					]
 				}
 			},
