@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/horvatic/freighter/pkg/gateway"
+	"github.com/horvatic/freighter/pkg/entry"
 )
 
 func main() {
-	gateway.Start()
+	entry.Start()
 }

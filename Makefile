@@ -30,22 +30,12 @@ unit-test: clean mod
 .PHONY: run-test-env
 .NOTPARALLEL:
 run-test-env: clean mod build build-test
-	nohup bin/freighter & >/dev/null &
-	sleep 5
-	bin/freighterTest & >/dev/null
-	@echo
-	@echo
-	@echo "****Process Running****"
-	@ps -a | grep "freighter"
+	./setup.sh "run-test-env"
 
 .PHONY: run
 .NOTPARALLEL:
 run: clean mod build
-	nohup bin/freighter & >/dev/null &
-	@echo
-	@echo
-	@echo "****Process Running****"
-	@ps -a | grep "freighter"
+	./setup.sh "run"
 
 .PHONY: docker-build
 .NOTPARALLEL:

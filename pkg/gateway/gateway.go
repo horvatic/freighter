@@ -1,46 +1,23 @@
 package gateway
 
 import (
+	"github.com/horvatic/freighter/pkg/config"
 	"github.com/horvatic/freighter/pkg/datastore"
 	"github.com/horvatic/freighter/pkg/proxy"
+	"github.com/horvatic/freighter/pkg/request"
+	"github.com/horvatic/freighter/pkg/router"
 	"io"
 	"io/ioutil"
-	"net/http"
-	"net/url"
 	"strings"
+	"fmt"
 )
 
-func getQuery(query url.Values) string {
-	q := ""
-	if query != nil {
-		for key, elements := range query {
-			for _, element := range elements {
-				if q != "" {
-					q = q + "&"
-				}
-				q = q + key + "=" + element
-			}
-		}
+func ProcessRequest(req *request.Request, p proxy.Proxy, d datastore.DataStore, config *config.GatewayConfig) (io.ReadCloser, int) {
+	key := getApiKeyFromHeader(req.Headers)
+	fmt.Println(req.Headers)
+	if !hasValidApiKey(config, key) {
+		return ioutil.NopCloser(strings.NewReader("Api key failed to validate")), 403
 	}
-	if q != "" {
-		q = "?" + q
-	}
-	return q
-}
-
-func route(req *Request, p proxy.Proxy, d datastore.DataStore) (io.ReadCloser, int) {
-	parts := strings.SplitAfter(strings.TrimLeft(req.UriPath, "/"), "/")
-	s, serr := d.GetService(strings.TrimRight(parts[0], "/"))
-	if serr != nil {
-		return ioutil.NopCloser(strings.NewReader(serr.Error())), http.StatusInternalServerError
-	}
-
-	body, err, statusCode := p.DoRequest(req.Method, s.Host+":"+s.Port+"/"+strings.Join(parts[1:], "")+getQuery(req.Query), req.Headers, req.Body)
-	if err != nil {
-		if body != nil {
-			body.Close()
-		}
-		return ioutil.NopCloser(strings.NewReader(err.Error())), http.StatusInternalServerError
-	}
-	return body, statusCode
+	req.Headers = removeApiKeyHeader(req.Headers)
+	return router.Route(req, p, d)
 }

@@ -28,6 +28,53 @@
 			],
 			"request": {
 				"method": "GET",
+				"header": [
+					{
+						"key": "apikey",
+						"value": "123",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "127.0.0.1:8080/test/hello",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "basic get 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "967d4cc2-edf4-4be0-a53c-3eaef6e1ed8b",
+						"exec": [
+							"pm.test(\"Body is Api key failed to validate\", () => {",
+							"  const response = pm.response.text();",
+							"  pm.expect(response).to.eql(\"Api key failed to validate\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 403\", () => {",
+							"  pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
 				"header": [],
 				"url": {
 					"raw": "127.0.0.1:8080/test/hello",
@@ -83,6 +130,11 @@
 						"key": "moretest",
 						"value": "testing123",
 						"type": "text"
+					},
+					{
+						"key": "Apikey",
+						"value": "123",
+						"type": "text"
 					}
 				],
 				"url": {
@@ -125,7 +177,13 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Apikey",
+						"value": "123",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "127.0.0.1:8080/test/testquery?hello=world",
 					"host": [
@@ -172,7 +230,13 @@
 			],
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Apikey",
+						"value": "123",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "127.0.0.1:8080/test/testquery?hello=world",
 					"host": [
@@ -219,7 +283,13 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Apikey",
+						"value": "123",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "127.0.0.1:8080/test/feweewf",
 					"host": [
@@ -260,7 +330,13 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Apikey",
+						"value": "123",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "127.0.0.1:8080/test/error",
 					"host": [
@@ -301,7 +377,13 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Apikey",
+						"value": "123",
+						"type": "text"
+					}
+				],
 				"url": {
 					"raw": "127.0.0.1:8080/nohost/hello",
 					"host": [
@@ -342,7 +424,13 @@
 			],
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Apikey",
+						"value": "123",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "hello all from post"
@@ -387,7 +475,13 @@
 			],
 			"request": {
 				"method": "PUT",
-				"header": [],
+				"header": [
+					{
+						"key": "Apikey",
+						"value": "123",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "hello all from put"
@@ -432,7 +526,13 @@
 			],
 			"request": {
 				"method": "PATCH",
-				"header": [],
+				"header": [
+					{
+						"key": "Apikey",
+						"value": "123",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "hello all from patch"
