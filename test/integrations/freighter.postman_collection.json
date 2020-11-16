@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6d11102a-59b5-4a30-acda-8b00cadb5882",
+		"_postman_id": "6da9f453-777d-4216-8960-4586bc2c6987",
 		"name": "freighter",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b5bd2eb0-b79d-45c3-ac21-6939716624e0",
+						"id": "eef65cd7-5f8d-4329-814b-28c89b1bcbbd",
 						"exec": [
 							"pm.test(\"Body is hello\", () => {",
 							"  const response = pm.response.text();",
@@ -52,7 +52,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "68205c32-e044-4806-98c7-e1b8ac3040aa",
+						"id": "cf2ca43b-d045-4766-a63c-f30bbdd22bb7",
 						"exec": [
 							"pm.test(\"response is correct\", () => {",
 							"  const response = pm.response.text();",
@@ -108,7 +108,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "e8c3cc45-85c1-49a5-a221-d6ec49681c63",
+						"id": "117c591c-ee04-4579-a102-c01f3c056faf",
 						"exec": [
 							"pm.test(\"response is hello=world\", () => {",
 							"  const response = pm.response.text();",
@@ -150,12 +150,59 @@
 			"response": []
 		},
 		{
+			"name": "DELETE query",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cf6435a7-2e11-4739-969d-16d637703105",
+						"exec": [
+							"pm.test(\"response is hello=world\", () => {",
+							"  const response = pm.response.text();",
+							"  pm.expect(response).to.eql(\"hello=world\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8080/test/testquery?hello=world",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"testquery"
+					],
+					"query": [
+						{
+							"key": "hello",
+							"value": "world"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "basic get 404",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "421bf09d-bf14-4e53-973a-135609d72bbc",
+						"id": "0e48a371-ed78-4bb0-9312-9b6ddd5d8385",
 						"exec": [
 							"pm.test(\"response is 404 page not found\", () => {",
 							"  const response = pm.response.text();",
@@ -196,7 +243,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "46d70b34-a2b6-4186-a66b-4a7f584edf5d",
+						"id": "26e7c843-5b08-47ac-b5ca-6159c12e818e",
 						"exec": [
 							"pm.test(\"response is 500 page not found\", () => {",
 							"  const response = pm.response.text();",
@@ -237,7 +284,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b42e8532-dc97-40e1-ab88-7b8b5c1310e0",
+						"id": "1be331e9-c80a-446a-b1ba-aa4f383392b1",
 						"exec": [
 							"pm.test(\"response is 500 page not found\", () => {",
 							"  const response = pm.response.text();",
@@ -278,7 +325,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "8d5644f7-7c46-40cd-a067-4147b3a569e6",
+						"id": "b36b7a33-0476-41f6-ad7d-1d8c33677836",
 						"exec": [
 							"pm.test(\"response\", () => {",
 							"  const response = pm.response.text();",
@@ -301,7 +348,7 @@
 					"raw": "hello all from post"
 				},
 				"url": {
-					"raw": "127.0.0.1:8080/test/postbody",
+					"raw": "127.0.0.1:8080/test/testbody",
 					"host": [
 						"127",
 						"0",
@@ -311,7 +358,97 @@
 					"port": "8080",
 					"path": [
 						"test",
-						"postbody"
+						"testbody"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "basic PUT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "62af4e89-2624-4fa1-b63a-6ea5119a02f1",
+						"exec": [
+							"pm.test(\"response\", () => {",
+							"  const response = pm.response.text();",
+							"  pm.expect(response).to.eql(\"hello all from put\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "hello all from put"
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/test/testbody",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"testbody"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "basic PATCH",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "348276d6-650e-4ebd-8416-f82cfac6fcb5",
+						"exec": [
+							"pm.test(\"response\", () => {",
+							"  const response = pm.response.text();",
+							"  pm.expect(response).to.eql(\"hello all from patch\");",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "hello all from patch"
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/test/testbody",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"testbody"
 					]
 				}
 			},

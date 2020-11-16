@@ -33,7 +33,7 @@ func hello(w http.ResponseWriter, req *http.Request) {
 	fmt.Fprintf(w, "hello\n")
 }
 
-func postBody(w http.ResponseWriter, req *http.Request) {
+func testBody(w http.ResponseWriter, req *http.Request) {
 
 	bodyBytes, _ := ioutil.ReadAll(req.Body)
 	bodyString := string(bodyBytes)
@@ -64,7 +64,7 @@ func main() {
 	http.HandleFunc("/testquery", testQuery)
 	http.HandleFunc("/headers", headers)
 	http.HandleFunc("/error", errorResponse)
-	http.HandleFunc("/postbody", postBody)
+	http.HandleFunc("/testbody", testBody)
 
 	http.ListenAndServe(":8000", nil)
 }
