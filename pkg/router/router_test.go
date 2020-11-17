@@ -1,8 +1,9 @@
-package gateway
+package router
 
 import (
 	"errors"
 	"github.com/horvatic/freighter/pkg/datastore"
+	"github.com/horvatic/freighter/pkg/request"
 	"github.com/horvatic/freighter/test/mock"
 	"io"
 	"io/ioutil"
@@ -20,7 +21,7 @@ func TestRoute(t *testing.T) {
 	headers["head"] = []string{"headerinfo"}
 	body := ioutil.NopCloser(strings.NewReader("test body"))
 	defer body.Close()
-	result, StatusCode := route(NewRequest("POST", "servicename/test", query, headers, body),
+	result, StatusCode := Route(request.NewRequest("POST", "servicename/test", query, headers, body),
 		&mock.MockProxy{Body: testBody, Error: nil, StatusCode: http.StatusOK},
 		&mock.MockDataStore{Service: datastore.Service{ServiceName: "test", Host: "1.1.1.1", Port: "8080"}, Error: nil})
 	defer result.Close()
@@ -54,7 +55,7 @@ func TestRoute404(t *testing.T) {
 	testBody := ioutil.NopCloser(strings.NewReader("test123"))
 	defer testBody.Close()
 
-	result, StatusCode := route(&Request{UriPath: "test", Query: nil},
+	result, StatusCode := Route(&request.Request{UriPath: "test", Query: nil},
 		&mock.MockProxy{Body: testBody, Error: nil, StatusCode: http.StatusNotFound},
 		&mock.MockDataStore{})
 	defer result.Close()
@@ -72,7 +73,7 @@ func TestRoute500(t *testing.T) {
 	testBody := ioutil.NopCloser(strings.NewReader("test123"))
 	defer testBody.Close()
 
-	result, StatusCode := route(&Request{UriPath: "test", Query: nil},
+	result, StatusCode := Route(&request.Request{UriPath: "test", Query: nil},
 		&mock.MockProxy{Body: testBody, Error: nil, StatusCode: http.StatusInternalServerError},
 		&mock.MockDataStore{})
 	defer result.Close()
@@ -90,7 +91,7 @@ func TestRoute500CallingProxy(t *testing.T) {
 	testBody := ioutil.NopCloser(strings.NewReader("Could not complete request"))
 	defer testBody.Close()
 
-	result, StatusCode := route(&Request{UriPath: "test", Query: nil},
+	result, StatusCode := Route(&request.Request{UriPath: "test", Query: nil},
 		&mock.MockProxy{Body: nil, Error: errors.New("error"), StatusCode: http.StatusInternalServerError},
 		&mock.MockDataStore{})
 
@@ -106,7 +107,7 @@ func TestRoute500CallingProxy(t *testing.T) {
 }
 
 func TestRouteCantFindService(t *testing.T) {
-	result, StatusCode := route(&Request{UriPath: "test", Query: nil},
+	result, StatusCode := Route(&request.Request{UriPath: "test", Query: nil},
 		&mock.MockProxy{Body: nil, Error: nil, StatusCode: http.StatusInternalServerError},
 		&mock.MockDataStore{Error: errors.New("error")})
 	defer result.Close()
