@@ -1,6 +1,7 @@
 package gateway
 
 import (
+	"fmt"
 	"github.com/horvatic/freighter/pkg/config"
 	"github.com/horvatic/freighter/pkg/datastore"
 	"github.com/horvatic/freighter/pkg/proxy"
@@ -9,7 +10,6 @@ import (
 	"io"
 	"io/ioutil"
 	"strings"
-	"fmt"
 )
 
 func ProcessRequest(req *request.Request, p proxy.Proxy, d datastore.DataStore, config *config.GatewayConfig) (io.ReadCloser, int) {

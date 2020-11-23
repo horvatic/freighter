@@ -39,5 +39,5 @@ func Start() {
 	store = datastore.NewMemoryDataStore()
 	http.HandleFunc("/", handleRequest)
 	http.HandleFunc("/config", handleConfig)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":"+gatewayConfig.Port, nil)
 }

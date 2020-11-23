@@ -29,13 +29,18 @@ unit-test: clean mod
 
 .PHONY: run-test-env
 .NOTPARALLEL:
-run-test-env: clean mod build build-test
-	./setup.sh "run-test-env"
+run-test-env:
+	docker-compose up --build -d
 
 .PHONY: run
 .NOTPARALLEL:
-run: clean mod build
-	./setup.sh "run"
+run:
+	docker-compose up --build -d web
+
+.PHONY: stop
+.NOTPARALLEL:
+stop:
+	docker-compose down
 
 .PHONY: docker-build
 .NOTPARALLEL:

@@ -1,0 +1,12 @@
+version: "3.8"
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+  test:
+    build: ./test/service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - "web"

@@ -1,8 +1,8 @@
 FROM golang:alpine
 
-# Set environmet variables for freighter
-ENV API_KEY=123 \
-    LISTEN_PORT=8080
+# Set environmet variables for test
+ENV TEST_HOST=test \
+    GATEWAY_HOST=web
 
 # Set environmet variables for GO
 ENV GO111MODULE=on \
@@ -12,10 +12,6 @@ ENV GO111MODULE=on \
 
 # Move to working directory /build
 WORKDIR /build
-
-# Copy and download dependency using go mod
-COPY go.mod .
-RUN go mod download
 
 # Copy the code into the container
 COPY . .
@@ -30,7 +26,7 @@ WORKDIR /dist
 RUN cp /build/bin/freighter .
 
 # Export necessary port
-EXPOSE 8080
+EXPOSE 8000
 
 # Command to run when starting the container
 CMD ["/dist/freighter"]
