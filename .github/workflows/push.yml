@@ -36,12 +36,16 @@ jobs:
       run: go run cmd/freighter/main.go &
       env:
         API_KEY: 123
+        LISTEN_PORT: 8080
 
     - name: sleep
       run: sleep 5
 
     - name: Run Test Server
       run: go run test/service/cmd/freighter/main.go &
+      env:
+        TEST_HOST: 127.0.0.1
+        GATEWAY_HOST: 127.0.0.1
 
     - name: Run API Tests
       id: run-newman
