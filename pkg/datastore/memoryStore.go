@@ -46,3 +46,7 @@ func (m *MemoryDataStore) RemoveService(serviceName string) error {
 	m.services = append(m.services[:removeIndex], m.services[removeIndex+1:]...)
 	return nil
 }
+
+func (m *MemoryDataStore) GetAllServices() []Service {
+	return m.services
+}
