@@ -61,9 +61,10 @@
 						"id": "c46c923d-9b58-4eb8-b04b-7730ec28069d",
 						"exec": [
 							"pm.test(\"Return body is correct\", () => {",
+							"    const host = pm.environment.get(\"host\");",
 							"    const responseJson = pm.response.json();",
 							"    pm.expect(responseJson[0].serviceName).to.eql('test');",
-							"    pm.expect(responseJson[0].host).to.eql('http://test');",
+							"    pm.expect(responseJson[0].host).to.eql(host);",
 							"    pm.expect(responseJson[0].port).to.eql('8000');",
 							"});",
 							"",
