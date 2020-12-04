@@ -29,12 +29,12 @@ unit-test: clean mod
 
 .PHONY: run-test-env
 .NOTPARALLEL:
-run-test-env:
+run-test-env: clean mod unit-test
 	docker-compose up --build -d
 
 .PHONY: run
 .NOTPARALLEL:
-run:
+run: clean mod unit-test
 	docker-compose up --build -d web
 
 .PHONY: stop
@@ -44,7 +44,7 @@ stop:
 
 .PHONY: docker-build
 .NOTPARALLEL:
-docker-build: clean unit-test
+docker-build: clean mod unit-test
 	docker build . -t freighter
 
 .PHONY: docker-run
