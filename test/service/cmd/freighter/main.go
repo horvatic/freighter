@@ -57,7 +57,7 @@ func main() {
 	values := map[string]string{"serviceName": "test", "host": "http://" + host, "port": "8000"}
 
 	jsonValue, _ := json.Marshal(values)
-	resp, _ := http.Post("http://"+gatewayHost+":8080/config", "application/json", bytes.NewBuffer(jsonValue))
+	resp, _ := http.Post("http://"+gatewayHost+":8080/config/register", "application/json", bytes.NewBuffer(jsonValue))
 	resp.Body.Close()
 
 	http.HandleFunc("/hello", hello)

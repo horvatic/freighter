@@ -1,11 +1,10 @@
 package entry
 
 import (
-	"encoding/json"
-	"fmt"
 	"github.com/horvatic/freighter/pkg/config"
 	"github.com/horvatic/freighter/pkg/datastore"
 	"github.com/horvatic/freighter/pkg/gateway"
+	"github.com/horvatic/freighter/pkg/profile"
 	"github.com/horvatic/freighter/pkg/proxy"
 	"github.com/horvatic/freighter/pkg/request"
 	"io"
@@ -14,17 +13,6 @@ import (
 
 var store *datastore.MemoryDataStore
 var gatewayConfig *config.GatewayConfig
-
-func handleConfig(w http.ResponseWriter, req *http.Request) {
-	var s datastore.Service
-	err := json.NewDecoder(req.Body).Decode(&s)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-	store.SetService(&s)
-	fmt.Fprintf(w, "Service: %+v", s)
-}
 
 func handleRequest(w http.ResponseWriter, req *http.Request) {
 	defer req.Body.Close()
@@ -37,7 +25,8 @@ func handleRequest(w http.ResponseWriter, req *http.Request) {
 func Start() {
 	gatewayConfig = config.BuildGatewayConfig()
 	store = datastore.NewMemoryDataStore()
+	profile := profile.NewProfile(store)
 	http.HandleFunc("/", handleRequest)
-	http.HandleFunc("/config", handleConfig)
+	profile.Setup()
 	http.ListenAndServe(":"+gatewayConfig.Port, nil)
 }

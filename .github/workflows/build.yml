@@ -52,6 +52,7 @@ jobs:
       uses: anthonyvscode/newman-action@v1
       with:
         collection: test/integrations/freighter.postman_collection.json
+        environment: test/integrations/ci-testing.postman_environment.json
         reporters: cli
 
     - name: Output summary to console

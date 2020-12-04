@@ -14,9 +14,14 @@ func (m *MockDataStore) GetService(serviceName string) (*datastore.Service, erro
 }
 
 func (m *MockDataStore) SetService(service *datastore.Service) error {
+	m.Service = *service
 	return m.Error
 }
 
 func (m *MockDataStore) RemoveService(serviceName string) error {
 	return m.Error
+}
+
+func (m *MockDataStore) GetAllServices() []datastore.Service {
+	return []datastore.Service{m.Service}
 }
