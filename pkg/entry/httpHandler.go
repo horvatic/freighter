@@ -16,7 +16,7 @@ var gatewayConfig *config.GatewayConfig
 
 func handleRequest(w http.ResponseWriter, req *http.Request) {
 	defer req.Body.Close()
-	response, statusCode := gateway.ProcessRequest(request.NewRequest(req.Method, req.URL.Path, req.URL.Query(), req.Header, req.Body), &proxy.RequestProxy{}, store, gatewayConfig)
+	response, statusCode := gateway.ProcessRequest(request.NewRequest(req.Method, req.URL.Path, req.URL.Query(), req.URL.RawQuery, req.Header, req.Body), &proxy.RequestProxy{}, store, gatewayConfig)
 	defer response.Close()
 	w.WriteHeader(statusCode)
 	io.Copy(w, response)

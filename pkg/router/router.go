@@ -7,26 +7,14 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 	"strings"
 )
 
-func getQuery(query url.Values) string {
-	q := ""
-	if query != nil {
-		for key, elements := range query {
-			for _, element := range elements {
-				if q != "" {
-					q = q + "&"
-				}
-				q = q + key + "=" + element
-			}
-		}
+func getQuery(query string) string {
+	if query == "" {
+		return ""
 	}
-	if q != "" {
-		q = "?" + q
-	}
-	return q
+	return "?" + query
 }
 
 func Route(req *request.Request, p proxy.Proxy, d datastore.DataStore) (io.ReadCloser, int) {
@@ -36,7 +24,7 @@ func Route(req *request.Request, p proxy.Proxy, d datastore.DataStore) (io.ReadC
 		return ioutil.NopCloser(strings.NewReader(serr.Error())), http.StatusInternalServerError
 	}
 
-	body, err, statusCode := p.DoRequest(req.Method, s.Host+":"+s.Port+"/"+strings.Join(parts[1:], "")+getQuery(req.Query), req.Headers, req.Body)
+	body, err, statusCode := p.DoRequest(req.Method, s.Host+":"+s.Port+"/"+strings.Join(parts[1:], "")+getQuery(req.RawQuery), req.Headers, req.Body)
 	if err != nil {
 		if body != nil {
 			body.Close()
