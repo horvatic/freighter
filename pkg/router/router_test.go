@@ -16,12 +16,13 @@ func TestRoute(t *testing.T) {
 	testBody := ioutil.NopCloser(strings.NewReader("test123"))
 	defer testBody.Close()
 	query := make(map[string][]string)
+	rawQuery := "hello=world&hello=444"
 	headers := make(map[string][]string)
 	query["hello"] = []string{"world", "444"}
 	headers["head"] = []string{"headerinfo"}
 	body := ioutil.NopCloser(strings.NewReader("test body"))
 	defer body.Close()
-	result, StatusCode := Route(request.NewRequest("POST", "servicename/test", query, headers, body),
+	result, StatusCode := Route(request.NewRequest("POST", "servicename/test", query, rawQuery, headers, body),
 		&mock.MockProxy{Body: testBody, Error: nil, StatusCode: http.StatusOK},
 		&mock.MockDataStore{Service: datastore.Service{ServiceName: "test", Host: "1.1.1.1", Port: "8080"}, Error: nil})
 	defer result.Close()
