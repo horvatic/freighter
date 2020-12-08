@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6da9f453-777d-4216-8960-4586bc2c6987",
+		"_postman_id": "cb8e0fdc-ebfd-426b-bc53-c07a1ea02b23",
 		"name": "freighter",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "eef65cd7-5f8d-4329-814b-28c89b1bcbbd",
+						"id": "4c0fed8c-3e16-4e1d-94b1-590afd971dc5",
 						"exec": [
 							"pm.test(\"Body is hello\", () => {",
 							"  const response = pm.response.text();",
@@ -58,7 +58,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "c46c923d-9b58-4eb8-b04b-7730ec28069d",
+						"id": "935d9cfa-6222-432b-9e2a-1f73e8883b43",
 						"exec": [
 							"pm.test(\"Return body is correct\", () => {",
 							"    const host = pm.environment.get(\"host\");",
@@ -97,12 +97,115 @@
 			"response": []
 		},
 		{
+			"name": "get api key",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b5cd3f22-fb42-48fe-8555-5271315a450f",
+						"exec": [
+							"pm.test(\"Return body is correct\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.apiKey).to.eql('123');",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "127.0.0.1:8080/config/getapikey",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"config",
+						"getapikey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "set api key",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66b06fbc-c469-446e-9e90-52aeb992c2f3",
+						"exec": [
+							"pm.test(\"Return body is correct\", () => {",
+							"    const responseJson = pm.response.json();",
+							"    pm.expect(responseJson.apiKey).to.eql('werwerwe');",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//Set correct state of API KEY",
+							"pm.sendRequest({",
+							"    url: 'http://127.0.0.1:8080/config/setapikey',",
+							"    method: 'POST',",
+							"    body: {",
+							"        mode: 'raw',",
+							"        raw: JSON.stringify({apiKey:\"123\"})",
+							"    }",
+							"}, function (err, res) {",
+							"    console.log(res);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"apiKey\":\"werwerwe\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "127.0.0.1:8080/config/setapikey",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"config",
+						"setapikey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "basic get 403",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
-						"id": "967d4cc2-edf4-4be0-a53c-3eaef6e1ed8b",
+						"id": "4221271e-a5fd-48fe-9a49-ea8b57a4f8a7",
 						"exec": [
 							"pm.test(\"Body is Api key failed to validate\", () => {",
 							"  const response = pm.response.text();",
@@ -143,7 +246,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "cf2ca43b-d045-4766-a63c-f30bbdd22bb7",
+						"id": "35bf2f0d-6254-423e-ad09-3b728ee28725",
 						"exec": [
 							"pm.test(\"response is correct\", () => {",
 							"  const response = pm.response.text();",
@@ -204,7 +307,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "117c591c-ee04-4579-a102-c01f3c056faf",
+						"id": "07ba3fac-6b72-4ae0-94fb-aa1166648c70",
 						"exec": [
 							"pm.test(\"response is hello=world\", () => {",
 							"  const response = pm.response.text();",
@@ -257,7 +360,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "cf6435a7-2e11-4739-969d-16d637703105",
+						"id": "29f10fe5-32da-47ef-ae97-13135d5eebbe",
 						"exec": [
 							"pm.test(\"response is hello=world\", () => {",
 							"  const response = pm.response.text();",
@@ -310,7 +413,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "0e48a371-ed78-4bb0-9312-9b6ddd5d8385",
+						"id": "06b0ffb2-dc1d-4dd5-bdf0-47d5a4692007",
 						"exec": [
 							"pm.test(\"response is 404 page not found\", () => {",
 							"  const response = pm.response.text();",
@@ -357,7 +460,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "26e7c843-5b08-47ac-b5ca-6159c12e818e",
+						"id": "5997ff69-990d-4f69-abf6-b480ba717186",
 						"exec": [
 							"pm.test(\"response is 500 page not found\", () => {",
 							"  const response = pm.response.text();",
@@ -404,7 +507,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "1be331e9-c80a-446a-b1ba-aa4f383392b1",
+						"id": "fb8abdf8-779b-4aeb-a35a-0d14ee698ec3",
 						"exec": [
 							"pm.test(\"response is 500 page not found\", () => {",
 							"  const response = pm.response.text();",
@@ -451,7 +554,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b36b7a33-0476-41f6-ad7d-1d8c33677836",
+						"id": "da2d31dd-e385-43bb-842e-de654868e342",
 						"exec": [
 							"pm.test(\"response\", () => {",
 							"  const response = pm.response.text();",
@@ -502,7 +605,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "62af4e89-2624-4fa1-b63a-6ea5119a02f1",
+						"id": "781e0d75-fada-42f0-8f4e-e266b2de36e0",
 						"exec": [
 							"pm.test(\"response\", () => {",
 							"  const response = pm.response.text();",
@@ -553,7 +656,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "348276d6-650e-4ebd-8416-f82cfac6fcb5",
+						"id": "10ddeeaa-aefc-4b86-aa6b-09051b7ade68",
 						"exec": [
 							"pm.test(\"response\", () => {",
 							"  const response = pm.response.text();",

@@ -15,7 +15,7 @@ import (
 func ProcessRequest(req *request.Request, p proxy.Proxy, d datastore.DataStore, config *config.GatewayConfig) (io.ReadCloser, int) {
 	key := getApiKeyFromHeader(req.Headers)
 	fmt.Println(req.Headers)
-	if !hasValidApiKey(config, key) {
+	if !hasValidApiKey(config, key, d) {
 		return ioutil.NopCloser(strings.NewReader("Api key failed to validate")), 403
 	}
 	req.Headers = removeApiKeyHeader(req.Headers)

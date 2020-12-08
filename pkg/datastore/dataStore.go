@@ -5,4 +5,6 @@ type DataStore interface {
 	GetService(serviceName string) (*Service, error)
 	RemoveService(serviceName string) error
 	GetAllServices() []Service
+	GetApiKey() (string, error)
+	SetApiKey(apiKey string) error
 }

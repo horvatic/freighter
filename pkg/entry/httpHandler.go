@@ -24,7 +24,7 @@ func handleRequest(w http.ResponseWriter, req *http.Request) {
 
 func Start() {
 	gatewayConfig = config.BuildGatewayConfig()
-	store = datastore.NewMemoryDataStore()
+	store = datastore.NewMemoryDataStore(gatewayConfig)
 	profile := profile.NewProfile(store)
 	http.HandleFunc("/", handleRequest)
 	profile.Setup()

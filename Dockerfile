@@ -14,7 +14,7 @@ RUN go build -o bin/freighter cmd/freighter/main.go
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 
-ENV API_KEY=123 \
+ENV INIT_API_KEY=123 \
     LISTEN_PORT=8080
 
 WORKDIR /dist
