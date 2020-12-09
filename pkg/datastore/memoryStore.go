@@ -2,14 +2,17 @@ package datastore
 
 import (
 	"errors"
+	"github.com/horvatic/freighter/pkg/config"
 )
 
 type MemoryDataStore struct {
 	services []Service
+	apiKey   string
 }
 
-func NewMemoryDataStore() *MemoryDataStore {
-	m := MemoryDataStore{services: []Service{}}
+func NewMemoryDataStore(config *config.GatewayConfig) *MemoryDataStore {
+	m := MemoryDataStore{services: []Service{}, apiKey: config.InitAuthKey}
+
 	return &m
 }
 
@@ -49,4 +52,13 @@ func (m *MemoryDataStore) RemoveService(serviceName string) error {
 
 func (m *MemoryDataStore) GetAllServices() []Service {
 	return m.services
+}
+
+func (m *MemoryDataStore) GetApiKey() (string, error) {
+	return m.apiKey, nil
+}
+
+func (m *MemoryDataStore) SetApiKey(apiKey string) error {
+	m.apiKey = apiKey
+	return nil
 }

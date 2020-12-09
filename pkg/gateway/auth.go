@@ -2,11 +2,13 @@ package gateway
 
 import (
 	"github.com/horvatic/freighter/pkg/config"
+	"github.com/horvatic/freighter/pkg/datastore"
 	"net/http"
 )
 
-func hasValidApiKey(config *config.GatewayConfig, key string) bool {
-	return config.AuthKey == key
+func hasValidApiKey(config *config.GatewayConfig, key string, d datastore.DataStore) bool {
+	authKey, _ := d.GetApiKey()
+	return authKey == key
 }
 
 func removeApiKeyHeader(headers http.Header) http.Header {

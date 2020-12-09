@@ -2,25 +2,24 @@ package gateway
 
 import (
 	"github.com/horvatic/freighter/pkg/config"
+	"github.com/horvatic/freighter/test/mock"
 	"testing"
 )
 
 func TestAuthSuccessful(t *testing.T) {
-	config := &config.GatewayConfig{
-		AuthKey: "letmein123",
-	}
+	database := &mock.MockDataStore{ApiKey: "letmein123"}
+	config := &config.GatewayConfig{}
 
-	if !hasValidApiKey(config, "letmein123") {
+	if !hasValidApiKey(config, "letmein123", database) {
 		t.Errorf("got %t want %t", false, true)
 	}
 }
 
 func TestAuthFails(t *testing.T) {
-	config := &config.GatewayConfig{
-		AuthKey: "123",
-	}
+	database := &mock.MockDataStore{ApiKey: "123"}
+	config := &config.GatewayConfig{}
 
-	if hasValidApiKey(config, "fefwefwefwe") {
+	if hasValidApiKey(config, "fefwefwefwe", database) {
 		t.Errorf("got %t want %t", true, false)
 	}
 }

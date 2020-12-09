@@ -5,13 +5,13 @@ import (
 )
 
 type GatewayConfig struct {
-	AuthKey string
-	Port    string
+	InitAuthKey string
+	Port        string
 }
 
 func BuildGatewayConfig() *GatewayConfig {
 	return &GatewayConfig{
-		AuthKey: os.Getenv("API_KEY"),
-		Port:    os.Getenv("LISTEN_PORT"),
+		InitAuthKey: os.Getenv("INIT_API_KEY"),
+		Port:        os.Getenv("LISTEN_PORT"),
 	}
 }

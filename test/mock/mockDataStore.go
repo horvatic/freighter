@@ -6,6 +6,7 @@ import (
 
 type MockDataStore struct {
 	Service datastore.Service
+	ApiKey  string
 	Error   error
 }
 
@@ -24,4 +25,13 @@ func (m *MockDataStore) RemoveService(serviceName string) error {
 
 func (m *MockDataStore) GetAllServices() []datastore.Service {
 	return []datastore.Service{m.Service}
+}
+
+func (m *MockDataStore) GetApiKey() (string, error) {
+	return m.ApiKey, nil
+}
+
+func (m *MockDataStore) SetApiKey(apiKey string) error {
+	m.ApiKey = apiKey
+	return nil
 }
